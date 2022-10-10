@@ -7,6 +7,8 @@ main() {
 	Show(los);
 	Delete(los, 3);
 	Show(los);
+	Swap(los, 3, 6);
+	Show(los);
 	los = FreeLOS(los);
 	Show(los);
 }
@@ -51,19 +53,27 @@ void Add(LOS* los, size_t i) {
 
 }
 
-void Castling(LOS* los, size_t i, size_t _i) {
+void Swap(LOS* los, size_t i, size_t m) {
 	LOS* min = los;
 	LOS* max = los;
+	LOS* _max = los;
 	for (size_t n = 0; n < i-1; n++)
 	{
 		min = min->next;
 	}
 	LOS* l1 = min->next;
-	for (size_t n = 0; n < _i - 1; n++)
+	for (size_t n = 0; n < m-1; n++)
 	{
-		max = max->next;
+		_max = _max->next;
 	}
-	LOS* l2 = max->next;
+	LOS* l2 = _max->next;
+	max = l2->next;
+
+
+	min->next = l2;
+	_max->next = l1;
+	l2->next = l1->next;
+	l1->next = max;
 }
 
 LOS* FreeLOS(LOS* los) {
