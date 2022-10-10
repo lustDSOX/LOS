@@ -7,10 +7,9 @@ main() {
 	Show(los);
 	Delete(los, 3);
 	Show(los);
-	Swap(los, 3, 6);
+	los = Swap(los, 1, 5);
 	Show(los);
-	los = FreeLOS(los);
-	Show(los);
+	FreeLOS(los);
 }
 
 LOS* NewLOS(size_t n) {
@@ -53,30 +52,44 @@ void Add(LOS* los, size_t i) {
 
 }
 
-void Swap(LOS* los, size_t i, size_t m) {
+LOS* Swap(LOS* los, size_t i, size_t m) {
 	LOS* min = los;
 	LOS* max = los;
 	LOS* _max = los;
-	for (size_t n = 0; n < i-1; n++)
-	{
-		min = min->next;
+	if (i != 0) {
+		for (size_t n = 0; n < i - 1; n++)
+		{
+			min = min->next;
+		}
+		for (size_t n = 0; n < m - 1; n++)
+		{
+			_max = _max->next;
+		}
+		LOS* l2 = _max->next;
+		max = l2->next;
+		LOS* l1 = min->next;
+		min->next = l2;
+		_max->next = l1;
+		l2->next = l1->next;
+		l1->next = max;
+		return los;
 	}
-	LOS* l1 = min->next;
-	for (size_t n = 0; n < m-1; n++)
-	{
-		_max = _max->next;
+	else {
+		for (size_t n = 0; n < m - 1; n++)
+		{
+			_max = _max->next;
+		}
+		LOS* l2 = _max->next;
+		max = l2->next;
+		LOS* l1 = min->next;
+		l2->next = l1;
+		_max->next = min;
+		min->next = max;
+		return l2;
 	}
-	LOS* l2 = _max->next;
-	max = l2->next;
-
-
-	min->next = l2;
-	_max->next = l1;
-	l2->next = l1->next;
-	l1->next = max;
 }
 
-LOS* FreeLOS(LOS* los) {
+void FreeLOS(LOS* los) {
 	LOS* copy = los;
 	while (copy)
 	{
@@ -84,7 +97,6 @@ LOS* FreeLOS(LOS* los) {
 		free(los);
 		los = copy;
 	}
-	return NULL;
 }
 
 void Show(LOS* los) {

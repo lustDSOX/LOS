@@ -11,6 +11,6 @@ typedef struct LOS {
 LOS* NewLOS(size_t);
 void Delete(LOS*,size_t);
 void Add(LOS*, size_t);
-void Swap(LOS*, size_t,size_t);
-LOS* FreeLOS(LOS*);
+LOS* Swap(LOS*, size_t,size_t);
+void FreeLOS(LOS*);
 void Show(LOS*);
